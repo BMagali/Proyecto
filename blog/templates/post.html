@@ -1,0 +1,13 @@
+{% extends 'padre.html' %}
+
+{% load static %}
+
+{% block contenidoqueCambia %}
+   <h1>Post</h1>
+    {% for post in posts %}
+        <p>{{ post.titulo }}</p>
+        
+    {% endfor %}
+    
+{% endblock contenidoqueCambia %}
+    

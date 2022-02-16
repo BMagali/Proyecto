@@ -1,0 +1,13 @@
+{% extends 'padre.html' %}
+
+{% load static %}
+
+{% block contenidoqueCambia %}
+
+    
+    <div class="text-center">
+        <img height="40px" src="{{url}}" alt="avatar">
+        <h3>{{user.username}}</h3>
+    </div>
+
+{% endblock contenidoqueCambia %}

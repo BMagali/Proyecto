@@ -1,0 +1,51 @@
+{% extends 'padre.html' %}
+
+{% load static %}
+
+{% block contenidoqueCambia %}
+
+<div class="blog_main">
+    <div class="container">
+       <div class="row">
+          <div class="col-md-12">
+             <div class="titlepage">
+                <h2>Post</h2>
+                <span>Lista de Post </span>
+             </div>
+          </div>
+       </div>
+       <div class="row">
+          <div class="col-md-12">
+            <div class="our_two_box">
+              <div class="row d_flex">
+                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+
+
+                      <h4>{% for p in posts %}</h4>
+
+
+
+                           <br>
+                           <li>{{p}}</li>
+                                
+                              <button>
+                                 <a href="{% url 'EliminarPost' p.id %}">Eliminar</a> 
+                              </button>
+                                  <br>
+                           {% endfor %}
+                                 <br>
+                                 <br>
+                                 <a href="{% url 'PostFormulario' %}">New Post</a></h4>
+                                 </div>
+                              </div>
+                     </div>
+                </div>
+            </div>
+         </div>
+    </div>
+
+        
+    </div>
+</div>
+
+{% endblock contenidoqueCambia %}

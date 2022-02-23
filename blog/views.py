@@ -138,8 +138,7 @@ def register(request):
 @login_required
 def editarPerfil(request):
     usuario = request.user
-    avatares = Avatar.objects.filter(user=request.user.id)
-
+   
     if request.method == 'POST':
         miFormulario = UserEditForm(request.POST)
         if miFormulario.is_valid():
@@ -158,7 +157,7 @@ def editarPerfil(request):
     else:
         miFormulario = UserEditForm(initial={'email':usuario.email})
 
-    return render(request, "editarPerfil.html", {"miFormulario":miFormulario, "usuario":usuario, "url":avatares[0].imagen.url})
+    return render(request, "editarPerfil.html", {"miFormulario":miFormulario, "usuario":usuario})
 
 @login_required
 def agregarImagen(request):

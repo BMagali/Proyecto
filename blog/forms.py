@@ -3,17 +3,29 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
-from blog.models import Post
+from blog.models import Post, Tag
 
 
 
-class PostFormulario(forms.Form):
-    titulo = forms.CharField()
-    subtitulo = forms.CharField()
-    texto = forms.CharField()
-    autor = forms.CharField()
-    # imagen = forms.ImageField()
-    tags = forms.CharField()
+# class PostFormulario(forms.Form):
+#     titulo = forms.CharField()
+#     subtitulo = forms.CharField()
+#     texto = forms.CharField()
+#     autor = forms.CharField()
+#     # imagen = forms.ImageField()
+#     tags = forms.CharField()
+
+
+class PostFormulario(forms.ModelForm):
+    class Meta :
+        model = Post
+        fields = ('titulo', 'subtitulo', 'texto', 'tags')
+        widget = ({
+            'titulo': forms.TextInput(attrs={'class': 'form-control'}),
+            'subtitulo': forms.TextInput(attrs={'class': 'form-control'}),
+            'texto': forms.Textarea(attrs={'class': 'form-control'}),
+            'tags': forms.Select(attrs={'class': 'form-control'}),
+        })
 
 class AvatarFormulario(forms.Form):
     imagen = forms.ImageField()

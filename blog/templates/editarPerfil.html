@@ -10,8 +10,16 @@
     <link rel="stylesheet" href="{% static 'Appblog/css/bootstrap.min.css' %}">
 </head>
 <body>
+  <br>
+  <div class="container">
 
     <h2>Formulario: Editar perfil</h2>
+
+    <br>
+    <div class="text-left">
+        <img height="40px" src="{{url}}" alt="avatar">
+        <h3>{{user.username}}</h3>
+    </div>
 
     <form action="" method="POST">{% csrf_token %}
         <table>
@@ -25,7 +33,7 @@
     <p>
         <a href="{% url 'AgregarImagen' %}">Agregar Foto de Perfil</a>
     </p>
-
+   </div>  
 
 </body>
 </html>

@@ -8,16 +8,19 @@
     <title>Detalle</title>
     <link rel="stylesheet" href="{% static 'Appblog/css/style.css' %}">
     <link rel="stylesheet" href="{% static 'Appblog/css/bootstrap.min.css' %}">
+
 </head>
 <body>
+
+  <div class="container">
     
-    <p>Titulo: <i>{{ post.titulo }}</i></p>
-    <p>Subtitulo: <i>{{ post.subtitulo }}</i></p>
-    <p>Texto: <i>{{ post.texto }}</i></p>
+    <p><h2><i>{{ post.titulo }}</i></h2></p>
+    <p><h4><i>{{ post.subtitulo }}</i></h4></p>
+    <p><h5><i>{{ post.texto }}</i></h5></p>
     <p>
         <a href="{% url 'List' %}">Regresar</a>
     </p>
-
+  </div>
 
 </body>
 </html>

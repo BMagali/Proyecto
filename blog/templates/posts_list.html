@@ -25,10 +25,13 @@
                         <ul>
                             
                             {% for post in object_list %}
-                                      <p style="color: black;"> {{ post.titulo }} </p>
-                                        <p>
+                                      <!-- <p style="color: black;"> {{ post.titulo }} </p> -->
+                                      <li><a href="{% url 'Detail' post.id %}"><h2>{{ post.titulo }}</h2></a></li>
+                                        <p><small>
                                            <a style="color: grey;" href="{% url 'Detail' post.id %}">Ver</a>
+                                           <a style="color: grey;" href="{% url 'EditarPost' post.id %}">Editar</a>
                                            <a style="color: grey;" href="{% url 'EliminarPost' post.id %}">Eliminar</a>
+                                           </small>
                                         </p> 
                                     </li>
                             {% endfor %}

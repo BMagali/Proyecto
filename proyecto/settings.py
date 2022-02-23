@@ -128,3 +128,4 @@ LOGIN_URL = '/blog/login'
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+

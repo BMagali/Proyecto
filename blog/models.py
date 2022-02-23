@@ -1,6 +1,7 @@
 
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
 
 
 
@@ -16,11 +17,13 @@ class Post(models.Model):
     imagen = models.ImageField(upload_to='imagenes', null=True, blank=True)
     #autor = models.ForeignKey(User, on_delete=models.CASCADE)
     fecha_publicacion = models.DateTimeField(auto_now_add=True)
-    fecha_edicion = models.DateTimeField(auto_now=True) 
     tags = models.ManyToManyField(Tag)
    
     def __str__(self):
         return f'Titulo:{self.titulo} - Subtitulo:{self.titulo} - Texto:{self.texto} - Tag:{self.tags}'
+
+    def get_absolute_url(self):
+        return reverse('Detail', args=(str(self.id)))
  
 
 class Comentario(models.Model):
@@ -34,6 +37,3 @@ class Avatar(models.Model):
     def __str__(self):
         return f"Imagen de: {self.user.username}"
 
-# class Imagen(models.Model):
-#     post = models.ForeignKey(Post, on_delete=models.CASCADE)
-#     imagen = models.ImageField(upload_to='imagenes', null='True', blank='True')

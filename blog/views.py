@@ -1,5 +1,3 @@
-from dataclasses import fields
-from venv import create
 from django.http import HttpResponse
 from django.shortcuts import render
 from blog.models import Avatar, Post, Comentario, Tag
@@ -19,6 +17,8 @@ def inicio(request):
     
     return render(request, 'inicio.html')
 
+
+
 def post(request):
     posts=Post.objects.all()
     return render(request, 'post.html', {"posts":posts})
@@ -28,12 +28,6 @@ def ShowPost(request, id):
     tags=Tag.objects.filter(post__id=id)
     return render(request, 'show.html', {"post":post, "tags":tags})
 
-def comentario(request,id):
-    comentario=Comentario.objects.get(id=id)
-    return render(request, 'comentario.html', {"comentario":comentario})
-
-# def postFormulario(request):
-#     return render(request, "postFormulario.html")
 
 @login_required
 def postFormulario(request):
@@ -79,31 +73,27 @@ def eliminarPost(request, post_id):
     posts= Post.objects.all()
     contexto={"posts":posts}
 
-    return render(request, "leerPosts.html", contexto)
-
-
+    return render(request, "inicio.html", contexto)
 
 class PostList(ListView):
     model = Post
     template_name = "posts_list.html"
+    ordering = ['-fecha_publicacion']
 
 class PostDetail(LoginRequiredMixin, DetailView):
     model = Post
     template_name = "posts_detalle.html"
 
 class PostCreate(LoginRequiredMixin, CreateView):
-    #form_model = PostFormulario
     model = Post
-    success_url = '/post/list'
-    fields = ['titulo', 'texto', 'imagen']
-    template_name = "postFormulario.html"
-
-
-
-class PostDelete(LoginRequiredMixin, DeleteView):
+    form_class = PostFormulario
+    template_name = 'postsCreate.html'
+    # fields = '__all__'
+    
+class UpdatePostView(LoginRequiredMixin, UpdateView):
     model = Post
-    success_url = '/post/list'
-    template_name = "/"
+    template_name = 'PostUpdate.html'
+    fields = ['titulo', 'subtitulo', 'texto', 'tags']
 
 
 
@@ -135,7 +125,6 @@ def login_request(request):
 def register(request):
     if request.method == "POST":
         form = UserCreationForm(request.POST)
-        #form = UserRegisterForm(request.POST)
         if form.is_valid():
 
             username = form.cleaned_data['username']
@@ -144,12 +133,12 @@ def register(request):
 
     else:
         form = UserCreationForm()
-        #form = UserRegisterForm()
     return render(request, "registro.html", {"form":form})
 
 @login_required
 def editarPerfil(request):
     usuario = request.user
+    avatares = Avatar.objects.filter(user=request.user.id)
 
     if request.method == 'POST':
         miFormulario = UserEditForm(request.POST)
@@ -169,7 +158,7 @@ def editarPerfil(request):
     else:
         miFormulario = UserEditForm(initial={'email':usuario.email})
 
-    return render(request, "editarPerfil.html", {"miFormulario":miFormulario, "usuario":usuario})
+    return render(request, "editarPerfil.html", {"miFormulario":miFormulario, "usuario":usuario, "url":avatares[0].imagen.url})
 
 @login_required
 def agregarImagen(request):
@@ -191,3 +180,8 @@ def agregarImagen(request):
 def avatarView(request):
     avatares = Avatar.objects.filter(user=request.user.id)
     return render(request, "avatarView.html", {"url":avatares[0].imagen.url})
+
+
+def comentario(request,id):
+    comentario=Comentario.objects.get(id=id)
+    return render(request, 'comentario.html', {"comentario":comentario})
